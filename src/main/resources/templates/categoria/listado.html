@@ -1,35 +1,45 @@
 <!DOCTYPE html>
 
-<html>
-    <head>
-        <title>TechShop</title>
-        <meta charset="UTF-8">
-        <link href="/css/menu.css" rel="stylesheet" type="text/css"/>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://wwww.thymeleaf.org" 
+      xmlns:sec="http://thymeleaft.org/extras/spring-security">
+   <head th:replace="layout/plantilla  :: head">
+        <title>TechShop</title>    
     </head>
     <body>
-        <h2 th:replace="layout/plantilla :: header"/>
-        <div class = "contenido">
-            <h2 th:text ="#{categoria.titulo}">Listado de Categorias</h2>
-            <a th:href ="@{/categoria/nuevo}" th:text ="#{categoria.)">Nueva Categoria</a>
-            <div th:if ="${categoria != null and !categorias.empty}">
-                <table border="1">
-                    <thead>
-                        <tr>
-                            <th th:text="#{categoria.descripcion}">Descripcion</th>
-                            <th th:text="#{categoria.activo}">Activa</th>
-                            <th th:text="#{accion.eliminar}">Eliminar</th>
-                            <th th:text="#{accion.modificar}">Modificar</th>
-                        </tr>
-                    </thead>
-                    <tbody> 
-                        <tr th:each="categoria:${categorias}">
-                            <td th:text ="${categoria.descripcion}"></td>
-                            <td><input type="checkbox" name ="activo" th:checked ="${categoria.activo}" disabled="true"></td>
-                            <td><a th:href ="@{/categoria/eliminar}+${categoria.idCategoria}"th:text="#{accion.eliminar}">Eliminar</a></td>
-                            <td><a th:href ="@{/categoria/modificar}+${categoria.idCategoria}"th:text="#{accion.actualizar}">Modificar</a></td>
-                        </tr>
-                        </div>
-                    <div th:if ="${categoria == null or categorias.empty}"th:text ="#{categoria.no_mostrar}">
-
-                        </body>
-                        </html>
+         
+        <header th:replace="layout/plantilla :: header"/>
+        <div class="contenido">
+        <h2>Nuestras Categorias</h2>
+        <a th:href="@{/categoria/nuevo}"sec:authorize="hasRole('ROLE_ADMIN')">[[#{categoria.nuevo}]]</a>
+        <div th:if="${categorias != null and !categorias.empty}">
+        
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>[[#{categoria.descripcion}]]</th>
+                     <th sec:authorize="hasRole('ROLE_ADMIN')">[[#{accion.eliminar}]]</th>
+                     <th>[[#{categoria.activo}]]</th>
+                    <th sec:authorize="hasRole('ROLE_ADMIN')">[[#{accion.actualizar}]]</th>
+                </tr>
+            </thead>
+            <tbody>
+              <tr th:each="categoria : ${categorias}">
+                    <td th:text="${categoria.Descripcion}"></td>
+                    <td style="text-align:center"><input type="checkbox" name="activo"
+                                   th:checked="${categoria.activo}"disabled="true"></td>
+                    <td sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/categoria/eliminar/}+${categoria.idCategoria}">[[#{accion.eliminar}]]</a></td>
+                    <td sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/categoria/modificar/}+${categoria.idCategoria}">[[#{accion.actualizar}]]</a></td>
+                 
+                </tr>
+            </tbody>
+        </table>
+        </div>
+        <div th:if="${categorias == null or categorias.empty}">                                            >
+           [[#{categoria.no_mostrar}]]
+       </div>   
+        </div>
+        <footer th:replace="layout/plantilla::footer"/>
+        
+        </body>
+</html>

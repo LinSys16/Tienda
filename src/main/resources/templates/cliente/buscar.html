@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://thymeleaf.org/extras/spring-security">
+    <head th:replace="layout/plantilla  :: head">
+    <title>TechShop</title>
+    </head>
+    <body>
+        <header th:replace="layout/plantilla :: header"/>
+        <div class="contenido">
+            <h2>Datos de Cliente</h2>
+            <a th:href="@{/cliente/listado}">Regresar</a>
+            <hr>
+            <form th:action="@{/cliente/buscar}"
+                  method="post"
+                  th:object="${cliente}">                
+                <label for="apellidos">Apellidos:</label>
+                <input type="text" name="apellidos" th:field="*{apellidos}"/>                
+                <hr>
+                <input type="submit" name="buscar" value="Buscar"/>
+            </form>
+        </div>
+        <footer th:replace="layout/plantilla :: footer"/>
+    </body>
+</html>

@@ -1,29 +1,36 @@
 <!DOCTYPE html>
 
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://wwww.thymeleaf.org" 
+      xmlns:sec="http://thymeleaft.org/extras/spring-security">
+    <head th:replace="layout/plantilla  :: head">
+        <title>TechShop</title>
     </head>
     <body>
-        <header th:replace="layout/plantilla :: header"/>
-        <div class = "contenido">
-            <h2 th:text ="#{categoria.titulo}">Datos de categoria</h2>
-            <a th:href ="@{/categoria/listado}" th:text ="#{accion.regresar}">Regresar</a>
-            <br/>
-            <form th:action="@{/categoria/guardar}" method="post" th:object ="${categoria}">
-                <input type="hidden" name="idCategoria" th:field="*{idCategoria}"/>
-                <label for="descripcion" th:text="#{categoria.descripcion}" >Descripcion:</label>
-                <input type="text" name="descripcion" th:field="*{descripcion}"/>
-                <br/>  
-                <label for="activa" th:text="#{categoria.activo}" >Activa</label>
-                <input type="checkbox" name="activo" th:field="*{activo}"/>
-                <br/> 
-                <br/> 
-                <button type="submit" name="guardar" th:field="*{accion.guardar}"/>
-            </form>
+        <header th:replace="layout/plantilla ::header"/>
+        <div class="contenido">
+        <h2>Datos de Categoria</h2>
+        
+        <a th:href="@{/categoria/listado}">[[#{accion.regresar}]]</a>
+        <hr>
+         <form th:action="@{/categoria/guardar}"
+           method="post"    
+           th:object="${categoria}">
+            <input type="hidden"name="idCategoria"th:field="*{idCategoria}"/>
+            
+  
+            <br>
+            <label for="descripcion">[[#{categoria.descripcion}]]:</label>
+            <input type="text"name="descripcion" th:field="*{descripcion}"/>
+            <br>
+            <label for="activo">[[#{categoria.activo}]]:</label>
+            <input type="checkbox"name="activo" th:field="*{activo}"/>
+            <hr>
+            <input type="submit" name="guardar" value="Guardar"/>
+             </form>
+         
         </div>
-        <footer th:replace="layout/plantilla :: footer"/>
+       <footer th:replace="layout/plantilla :: footer"/>
+       
     </body>
 </html>

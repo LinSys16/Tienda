@@ -2,6 +2,7 @@ package com.tienda.controller;
 
 import com.tienda.domain.Articulo;
 import com.tienda.service.ArticuloService;
+import com.tienda.service.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +13,9 @@ public class ArticuloController {
 
     @Autowired
     private ArticuloService articuloService;
+
+    @Autowired
+    private CategoriaService categoriaService;
 
     @GetMapping("/articulo/listado")
     public String inicio(Model model) {
@@ -32,13 +36,14 @@ public class ArticuloController {
         articuloService.save(articulo);
         return "redirect:/articulo/listado";
     }
- @GetMapping("/articulo/modificar/{idArticulo}")
+
+    @GetMapping("/articulo/modificar/{idArticulo}")
     public String modificarArticulo(Articulo articulo, Model model) {
         var categorias = categoriaService.getCategorias(true);
-        model.addAttribute("categorias", categorias);        
+        model.addAttribute("categorias", categorias);
         return "/articulo/modifica";
     }
-    
+
     @GetMapping("/articulo/eliminar/{idArticulo}")
     public String eliminarArticulo(Articulo articulo) {
         articuloService.delete(articulo);
